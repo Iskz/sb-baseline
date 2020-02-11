@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+### ENABLE FOR PRODUCTION ###
+#  ssl:
+#    key-store: /home/iskandar/keystore.p12
+#    key-store-password: axi@ta123#
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+### ENABLE FOR PRODUCTION ###
+spring:
+  datasource:
+    url: jdbc:postgresql://10.11.120.111:5432/nbadb
+    username: nba_user
+    password: nba_password
+    db-schema: nba_schema # Custom schema for authorization
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+    platform: postgresql
+    hikari:
+      maximum-pool-size: 50
+      idle-timeout: 60000
+      connection-timeout: 60000
+      auto-commit: true
+  flyway:
+    baseline-on-migrate: false # change to true for first drop
+    enabled: true # change to true for first drop
+    schemas: nba_schema
+    baseline-version: 0
+    url: jdbc:postgresql://10.11.120.111:5432/nbadb
+    user: nba_user
+    password: nba_password
+  h2:
+    console:
+      enabled: false
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  profiles:
+    active: dev
+#  resources:
+#    static-locations: file:D:\workspace\aac-datathon\src\main\resources\static\
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: DEBUG
+#    org.flywaydb: DEBUG
+#    org.springframework: DEBUG
+    # Enable for Production
+#  file: log/datathon.log
+
